@@ -2,6 +2,7 @@
 #define UINT64_T_HPP_
 #include <concepts>
 #include <cstdint>
+#include <compare>
 
 class Uint64_t
 {
@@ -48,7 +49,28 @@ public:
     }
 
 private:
-    std::uint64_t m_storage;
+    std::uint64_t m_storage = 0u;
+
+public:
+    inline Uint64_t() : m_storage{ 0u } {}
+    inline Uint64_t(std::uint64_t value) : m_storage{ value } {}
+
+    inline operator std::uint64_t() const noexcept { return m_storage; }
+    inline explicit operator std::uint32_t() const noexcept { return m_storage; }
+    inline explicit operator std::uint16_t() const noexcept { return m_storage; }
+    inline explicit operator std::uint8_t() const noexcept { return m_storage; }
+
+    inline Uint64_t& operator=(std::uint64_t value) noexcept
+    {
+        m_storage = value;
+
+        return *this;
+    }
+
+    inline auto operator<=>(const Uint64_t& other) const noexcept
+    {
+        return m_storage <=> other.m_storage;
+    }
 };
 
 template<>
