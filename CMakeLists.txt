@@ -9,11 +9,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 if(PROJECT_IS_TOP_LEVEL)
-    file(GLOB_RECURSE SRC includes/*.hpp)
-
-    add_library(${PROJECT_NAME} INTERFACE ${SRC})
-else()
-    add_library(${PROJECT_NAME} INTERFACE)
+    set(ADD_HEADERS_TO_PROJECT TRUE)
 endif()
 
-target_include_directories(${PROJECT_NAME} INTERFACE includes/)
+add_subdirectory(library)
+
+if(ADD_TEST)
+    add_subdirectory(test)
+endif()
